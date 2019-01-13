@@ -1,0 +1,176 @@
+
+
+<?php
+   session_start();
+ if(isset($_SESSION["uid"])){
+	 if(isset($_SESSION["upass"]))
+	 header('location:admin/admindash.php');
+	echo "you are already login";
+	exit();
+ }
+ 
+ ?>
+
+<!DOCTYPE HTML>
+<html lang=en_US"> 
+
+<head>
+<meta charset="UTF-8">
+<title> LOGIN Page</title>
+
+
+
+
+
+<link rel="stylesheet"  type="text/css" href="css/mystyle.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial=scale=1" >
+
+
+
+ 
+  
+<!--
+   <nav class="navbar navbar-expand-md bg-dark navbar-dark ">
+	 <div class="container">
+	     <h1 class="navbar-brand font-weight-bold text-danger">SCHOOL MANAGEMENT SYSTEM</h1>
+	 
+
+
+</div>		
+</div>	
+</nav >
+-->
+
+<style>
+
+body{
+	   
+	   background-image:url('images/img.jpg');
+	   background-size: 100% 100%;
+	   background-attachment:fixed;
+		width:100%;
+		height: 660px;
+		
+   }
+   .form-contain{
+		margin-top:100px;
+		background:rgba(0,0,0, .6);
+ 		color:white;
+		border-radius:50px;
+	}
+	
+	 .form-contain input{
+		 width:200px;
+	 }
+	 
+	 .frm{
+		 margin-top:40px;
+		 
+	 }
+	 .pass{
+		 margin-top:45px;
+	 }
+	 .lbl{
+		 margin-top:30px;
+		 
+	 }
+   
+</style>
+
+</head>
+
+<body>
+
+
+   <div class="container form-contain">
+<h1  class="text-danger" align="center">Login Page</h1>
+
+<form  method="post" action="login.php">
+<div class="row frm"  >  
+       <div class="col-md-3">
+	   <img src="images/login.png" class="img-responsive">
+	   </div>
+	   
+	   <div class="col-md-2">
+	   
+	 <h4>Username :</h4>
+	 <h4 class="pass">Password :</h4>
+	 </div>
+	 <div class="col-md-3">
+	 <input type="text" class="form-control" name="uname" required>
+	  
+	  
+	 <input type="password" class="form-control lbl" name="pass" required>
+	 
+	 <input class="btn btn-danger lbl" type="submit" value="login" name="login">
+	  </div>
+	  </div>
+	  </form>
+	  </div>
+	 
+
+
+
+  <br><br>
+  <h3 align="center"><p>for new admin  <a href="signup.php">Signup here</a></p></h3>
+</body>
+</html>
+
+
+<?php
+ 
+ include('dbcon.php');
+ 
+ if(isset($_POST['login'])){
+         
+        $username = $_POST['uname'];
+		$password = $_POST['pass'];
+      
+         
+		
+		  $qry = "SELECT * FROM admin WHERE username = '$username' AND password='$password';";
+          $result = mysqli_query($con,$qry);
+		  
+		  
+		  
+           $row = mysqli_num_rows($result);
+		    
+		   if($row >= 1){
+			    header('location:admin/admindash.php');
+	         $_SESSION["uid"]=$_POST['uname'];
+	  $_SESSION["upass"]=$_POST['pass'];
+		   }
+		   else{
+			   
+		 ?>
+		 <script>
+		 alert('Username or Password is incorrect');
+		 </script>
+		 <?php 
+		 
+		 header('location:index.php');
+		 
+ 
+    
+ }}
+ 
+ ?>
+ 
+ 
+ 
+ 
